@@ -1,0 +1,14 @@
+Carga Perezosa:
+En el código original sin Proxy, el constructor de RealImage se ejecuta de inmediato al crear el objeto (new RealImage("photo.jpg")), disparando loadImageFromDisk() aunque aún no se muestre la imagen. Con ProxyImage, el constructor de RealImage no se ejecuta al instanciar el proxy; se retrasa hasta la primera llamada a display() cuando realImage es null.
+
+Transparencia:
+No, el código cliente no necesita saber si está trabajando con un Proxy o con el objeto real porque ambos implementan la interfaz Image y exponen el método display(), lo que permite usar la misma referencia de tipo Image en ambos casos.
+
+Rendimiento:
+Evita el costo inicial de cargar recursos pesados si nunca llegan a mostrarse, reduce el consumo temprano de recursos o tiempo de espera y evita repetir la carga costosa en llamadas posteriores una vez que el objeto real ya quedó instanciado.
+
+Control de Acceso:
+Además de la carga perezosa (lazy loading), un Proxy puede validar permisos o roles de usuario antes de delegar (Proxy de protección), almacenar en caché imágenes o datos ya cargados (Proxy de caché), registrar accesos o auditorías (Proxy de logging) o mediar llamadas hacia objetos en servidores remotos (Proxy remoto).
+
+Principio SOLID:
+Se aplica principalmente el Principio de Inversión de Dependencias (DIP) y el Principio de Sustitución de Liskov (LSP) / Abierto-Cerrado (OCP), ya que el cliente depende de la abstracción Image y ProxyImage puede sustituir a RealImage sin modificar el código cliente ni alterar la clase real.
